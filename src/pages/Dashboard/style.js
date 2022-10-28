@@ -64,3 +64,11 @@ export const MainDashboard = styled.main`
     text-align: center;
   }
 `;
+
+export const DivAddTechs = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 50%;
+`;

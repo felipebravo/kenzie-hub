@@ -4,17 +4,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Form } from "../../components/Form/style";
 import { InputDefault, SelectDefault } from "../../styles/input";
-import { ButtonDefault, ButtonMedium } from "../../styles/button";
+import { ButtonDefault } from "../../styles/button";
 import {
   StyledHeadline,
   StyledHeadlineItalic,
   StyledTitle,
 } from "../../styles/typography";
 import api from "../../services/api";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
+import { LinkStyled } from "../../components/Link/style";
 
 const schema = yup.object({
   name: yup.string().required("Nome é obrigatório"),
@@ -58,7 +59,7 @@ const SignIn = () => {
       const res = await api.post("users", data);
       console.log(res);
       res.data.id && successNotify();
-      setTimeout(navigate("/"), 5000);
+      navigate("/");
     } catch (error) {
       error.response.data.message === "Email already exists"
         ? errorNotify("E-mail já está cadastrado!")
@@ -94,9 +95,9 @@ const SignIn = () => {
     <>
       <Header variant="signin">
         <img src={Logo} alt="KenzieHub" />
-        <Link to={"/"}>
-          <ButtonMedium>Voltar</ButtonMedium>
-        </Link>
+        <LinkStyled variant="signin" to={"/"}>
+          Voltar
+        </LinkStyled>
       </Header>
       <Form onSubmit={handleSubmit(registerUser)}>
         <StyledTitle>Crie sua conta</StyledTitle>
@@ -177,7 +178,6 @@ const SignIn = () => {
           </SelectDefault>
         </label>
         <ButtonDefault type="submit">Cadastrar</ButtonDefault>
-        <ToastContainer />
       </Form>
     </>
   );

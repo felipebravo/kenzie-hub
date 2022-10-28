@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 export default createGlobalStyle`
   :root {
     --color-primary: #FF577F;
+    --color-primary-op: #FF577F20;
     --color-primary-focus: #FF427F;
     --color-primary-negative: #59323F;
     --grey-4: #121214;

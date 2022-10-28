@@ -4,67 +4,33 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Form } from "../../components/Form/style";
 import { InputDefault } from "../../styles/input";
-import { ButtonDefault, ButtonDisable } from "../../styles/button";
+import { ButtonDefault } from "../../styles/button";
 import {
   StyledHeadline,
   StyledHeadlineItalic,
   StyledTitle,
 } from "../../styles/typography";
-import { Link, useNavigate } from "react-router-dom";
-import api from "../../services/api";
-import { toast, ToastContainer } from "react-toastify";
+
 import Header from "../../components/Header";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { LinkStyled } from "../../components/Link/style";
+import { UserContext } from "../../contexts/UserContext";
 
 const schema = yup.object({
-  email: yup
-    .string()
-    .email("O e-mail não é válido")
-    .required("Insira seu e-mail de acesso"),
+  email: yup.string().required("Insira seu e-mail de acesso"),
   password: yup.string().required("Insira sua senha de acesso"),
 });
 
 const Login = () => {
-  const navigate = useNavigate();
+  const { handleLogin } = useContext(UserContext);
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const handleLogin = async (data) => {
-    try {
-      const res = await api.post("sessions", data);
-      window.localStorage.setItem("@authToken", res.data.token);
-      window.localStorage.setItem("@userId", res.data.user.id);
-      res.data.token && navigate("/dashboard");
-    } catch (error) {
-      errorNotify();
-      reset();
-    }
-  };
-
-  const errorNotify = () =>
-    toast.error("E-mail e(ou) senha de login inválido(s)", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-
-  useEffect(() => {
-    const token = window.localStorage.getItem("@authToken");
-
-    token && navigate("/dashboard");
-  }, []);
 
   return (
     <>
@@ -95,10 +61,9 @@ const Login = () => {
         </label>
         <ButtonDefault type="submit">Entrar</ButtonDefault>
         <StyledHeadline>Ainda não possui uma conta?</StyledHeadline>
-        <Link to={"/signin"}>
-          <ButtonDisable>Cadastrar</ButtonDisable>
-        </Link>
-        <ToastContainer />
+        <LinkStyled variant="login" to={"/signin"}>
+          Cadastrar
+        </LinkStyled>
       </Form>
     </>
   );

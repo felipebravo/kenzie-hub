@@ -14,13 +14,9 @@ export const Form = styled.form`
 
   background-color: var(--grey-3);
   border: 1px solid var(--grey-3);
-  border-radius: 4px;
+  border-radius: 0 0 4px 4px;
 
   label {
     width: 98%;
-  }
-
-  a {
-    width: 100%;
   }
 `;

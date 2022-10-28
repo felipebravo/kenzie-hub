@@ -76,6 +76,10 @@ export const ButtonMedium = styled.button`
 `;
 
 export const ButtonSmall = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   background-color: var(--grey-3);
 
   border: 1px solid var(--grey-3);
