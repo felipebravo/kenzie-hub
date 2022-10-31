@@ -10,14 +10,13 @@ import {
   StyledHeadlineItalic,
   StyledTitle,
 } from "../../styles/typography";
-import api from "../../services/api";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { LinkStyled } from "../../components/Link/style";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 const schema = yup.object({
   name: yup.string().required("Nome é obrigatório"),
@@ -47,7 +46,7 @@ const schema = yup.object({
 
 const SignIn = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const navigate = useNavigate();
+  const { registerUser } = useContext(UserContext);
 
   const {
     register,
@@ -56,43 +55,6 @@ const SignIn = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const registerUser = async (data) => {
-    try {
-      const res = await api.post("users", data);
-      console.log(res);
-      res.data.id && successNotify();
-      navigate("/");
-    } catch (error) {
-      error.response.data.message === "Email already exists"
-        ? errorNotify("E-mail já está cadastrado!")
-        : errorNotify("Erro ao cadastrar usuário, verifique os dados!");
-    }
-  };
-
-  const successNotify = () =>
-    toast.success("Usuário cadastrado com sucesso!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-
-  const errorNotify = (error) =>
-    toast.error(`${error}`, {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
 
   return (
     <>

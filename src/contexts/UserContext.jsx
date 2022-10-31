@@ -10,8 +10,20 @@ const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const errorNotify = () =>
-    toast.error("E-mail e(ou) senha de login inválido(s)", {
+  const errorNotify = (error) =>
+    toast.error(error, {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
+  const successNotify = () =>
+    toast.success("Usuário cadastrado com sucesso!", {
       position: "top-right",
       autoClose: 1500,
       hideProgressBar: false,
@@ -41,6 +53,19 @@ const UserProvider = ({ children }) => {
     handleUser();
   }, [user]);
 
+  const registerUser = async (data) => {
+    try {
+      const res = await api.post("users", data);
+      console.log(res);
+      res.data.id && successNotify();
+      navigate("/");
+    } catch (error) {
+      error.response.data.message === "Email already exists"
+        ? errorNotify("E-mail já está cadastrado!")
+        : errorNotify("Erro ao cadastrar usuário, verifique os dados!");
+    }
+  };
+
   const handleLogin = async (data) => {
     try {
       const res = await api.post("sessions", data);
@@ -49,12 +74,12 @@ const UserProvider = ({ children }) => {
       localStorage.setItem("@authToken", token);
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      errorNotify();
+      errorNotify("E-mail e(ou) senha de login inválido(s)");
     }
   };
 
   return (
-    <UserContext.Provider value={{ handleLogin, user, loading }}>
+    <UserContext.Provider value={{ registerUser, handleLogin, user, loading }}>
       {children}
     </UserContext.Provider>
   );
