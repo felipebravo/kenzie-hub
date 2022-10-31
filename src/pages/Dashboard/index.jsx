@@ -1,6 +1,6 @@
 import Logo from "../../assets/Logo.svg";
 import { Navigate, useNavigate } from "react-router-dom";
-import { ButtonMedium, ButtonSmall } from "../../styles/button";
+import { ButtonSmall } from "../../styles/button";
 import {
   DivAddTechs,
   DivDashboard,
@@ -13,14 +13,15 @@ import Header from "../../components/Header/index";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { StyledLoading } from "../../components/Loading/style";
+import { TechContext } from "../../contexts/TechContext";
+import { MdAddToQueue, MdOutlineLogout } from "react-icons/md";
 import Techs from "../../components/Techs";
 import AddTechModal from "../../components/Modal's/AddTechModal";
 import RemoveTechModal from "../../components/Modal's/RemoveTechModal";
-import { TechContext } from "../../contexts/TechContext";
 import UpdateTechModal from "../../components/Modal's/UpdateTechModal";
 
 const Dashboard = () => {
-  const { user, loading, userTechs } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
   const { addModal, setAddModal, updateModal, removeModal, setRemoveModal } =
     useContext(TechContext);
   const navigate = useNavigate();
@@ -43,9 +44,9 @@ const Dashboard = () => {
             <Header variant="dashboard">
               <div>
                 <img src={Logo} alt="KenzieHub" />
-                <ButtonMedium type="button" onClick={() => handleLogout()}>
-                  Sair
-                </ButtonMedium>
+                <ButtonSmall type="button" onClick={() => handleLogout()}>
+                  <MdOutlineLogout />
+                </ButtonSmall>
               </div>
             </Header>
             <Nav>
@@ -58,13 +59,14 @@ const Dashboard = () => {
           <MainDashboard>
             <DivAddTechs>
               <StyledTitle>Tecnologias</StyledTitle>
-              <ButtonSmall onClick={() => setAddModal(true)}>+</ButtonSmall>
+              <ButtonSmall onClick={() => setAddModal(true)}>
+                <MdAddToQueue />
+              </ButtonSmall>
             </DivAddTechs>
             {addModal && <AddTechModal setAddModal={setAddModal} />}
             {updateModal && <UpdateTechModal></UpdateTechModal>}
             {removeModal && <RemoveTechModal setRemoveModal={setRemoveModal} />}
-            {console.log(userTechs.length)}
-            {userTechs.length === 0 ? (
+            {user.techs.length === 0 ? (
               <>
                 <StyledTitle>
                   Você ainda não possui nenhuma tecnologia :(
@@ -74,7 +76,7 @@ const Dashboard = () => {
                 </StyledHeadline>
               </>
             ) : (
-              <Techs techs={userTechs} />
+              <Techs techs={user.techs} />
             )}
           </MainDashboard>
         </DivDashboard>

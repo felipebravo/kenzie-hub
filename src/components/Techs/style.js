@@ -42,7 +42,7 @@ export const DivTech = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 5px;
+  gap: 16px;
 
   width: 20%;
   min-width: fit-content;
@@ -54,11 +54,6 @@ export const DivTech = styled.div`
       border-color: var(--grey-4);
 
       transition: 0.5s;
-
-      svg {
-        scale: 1.5;
-        transition: 0.5s;
-      }
     }
   }
 `;

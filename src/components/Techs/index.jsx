@@ -1,14 +1,14 @@
 import { ButtonSmall } from "../../styles/button";
 import { StyledHeadline, StyledHeadlineBold } from "../../styles/typography";
 import { DivTech, StyledTech, StyledTechs } from "./style";
-import { IoTrashBinSharp } from "react-icons/io5";
-import { useContext, useRef } from "react";
+import { IoTrashBinOutline } from "react-icons/io5";
+import { RiEditLine } from "react-icons/ri";
+import { useContext } from "react";
 import { TechContext } from "../../contexts/TechContext";
 
 const Techs = ({ techs }) => {
   const { setRemoveModal, setUpdateModal, setTechToUpdate } =
     useContext(TechContext);
-  const ref = useRef();
 
   const modalRemove = (techId) => {
     setRemoveModal(true);
@@ -24,20 +24,17 @@ const Techs = ({ techs }) => {
   return (
     <StyledTechs>
       {techs.map((tech) => (
-        <StyledTech
-          key={tech.id}
-          onClick={(evt) => {
-            ref.current === evt.target ||
-            ref.current.childNodes[0] === evt.target
-              ? modalRemove(tech.id)
-              : modalUpdate(tech.id, tech.title, tech.status);
-          }}
-        >
+        <StyledTech key={tech.id}>
           <StyledHeadlineBold>{tech.title}</StyledHeadlineBold>
           <DivTech>
             <StyledHeadline>{tech.status}</StyledHeadline>
-            <ButtonSmall ref={ref} onClick={() => modalRemove(tech.id)}>
-              <IoTrashBinSharp />
+            <ButtonSmall onClick={() => modalRemove(tech.id)}>
+              <IoTrashBinOutline />
+            </ButtonSmall>
+            <ButtonSmall
+              onClick={() => modalUpdate(tech.id, tech.title, tech.status)}
+            >
+              <RiEditLine />
             </ButtonSmall>
           </DivTech>
         </StyledTech>

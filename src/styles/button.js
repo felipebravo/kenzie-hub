@@ -72,6 +72,11 @@ export const ButtonMedium = styled.button`
     background-color: var(--grey-2);
 
     border-color: var(--grey-2);
+
+    svg {
+      scale: 1.5;
+      transition: 0.5s;
+    }
   }
 `;
 
@@ -96,5 +101,10 @@ export const ButtonSmall = styled.button`
     background-color: var(--grey-2);
 
     border-color: var(--grey-2);
+
+    svg {
+      scale: 1.5;
+      transition: 0.5s;
+    }
   }
 `;

@@ -7,7 +7,6 @@ export const UserContext = createContext({});
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userTechs, setUserTechs] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -32,7 +31,6 @@ const UserProvider = ({ children }) => {
           api.defaults.headers.authorization = `Bearer ${token}`;
           const res = await api.get(`/profile`);
           setUser(res.data);
-          setUserTechs(res.data.techs);
         } catch (error) {
           localStorage.removeItem("@authToken");
           console.log(error);
@@ -41,7 +39,7 @@ const UserProvider = ({ children }) => {
       setLoading(false);
     };
     handleUser();
-  }, []);
+  }, [user]);
 
   const handleLogin = async (data) => {
     try {
@@ -56,9 +54,7 @@ const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider
-      value={{ handleLogin, user, loading, userTechs, setUserTechs }}
-    >
+    <UserContext.Provider value={{ handleLogin, user, loading }}>
       {children}
     </UserContext.Provider>
   );

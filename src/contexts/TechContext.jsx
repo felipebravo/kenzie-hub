@@ -1,17 +1,14 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../services/api";
-import { UserContext } from "./UserContext";
 
 export const TechContext = createContext({});
 
 const TechProvider = ({ children }) => {
-  const { setUserTechs } = useContext(UserContext);
   const [techToUpdate, setTechToUpdate] = useState({});
   const [addModal, setAddModal] = useState(null);
   const [updateModal, setUpdateModal] = useState(null);
   const [removeModal, setRemoveModal] = useState(null);
-  // const [loading, setLoading] = useState("");
 
   const errorNotify = (message) =>
     toast.error(message, {
@@ -41,8 +38,6 @@ const TechProvider = ({ children }) => {
     try {
       await api.post("users/techs", dataForm);
       successNotify("Tecnologia cadastrada com sucesso!");
-      const { data } = await api.get("/profile");
-      setUserTechs(data.techs);
       setAddModal(null);
     } catch (error) {
       error.response.data.message ===
@@ -59,8 +54,6 @@ const TechProvider = ({ children }) => {
     try {
       await api.put(`users/techs/${techId}`, dataForm);
       successNotify("Tecnologia atualizada!");
-      const { data } = await api.get("/profile");
-      setUserTechs(data.techs);
       localStorage.removeItem("@techId");
       setUpdateModal(null);
     } catch (error) {
@@ -72,8 +65,6 @@ const TechProvider = ({ children }) => {
     try {
       await api.delete(`/users/techs/${techId}`);
       successNotify("Tecnologia removida com sucesso!");
-      const { data } = await api.get("/profile");
-      setUserTechs(data.techs);
       localStorage.removeItem("@techId");
       setRemoveModal(null);
     } catch (error) {

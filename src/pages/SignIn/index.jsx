@@ -16,6 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { LinkStyled } from "../../components/Link/style";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { useState } from "react";
 
 const schema = yup.object({
   name: yup.string().required("Nome é obrigatório"),
@@ -44,6 +46,7 @@ const schema = yup.object({
 });
 
 const SignIn = () => {
+  const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -123,10 +126,15 @@ const SignIn = () => {
         <label>
           <StyledHeadline>Digite sua senha</StyledHeadline>
           <InputDefault
-            type="password"
+            type={isVisible ? "text" : "password"}
             placeholder="Digite aqui sua senha"
             {...register("password")}
           />
+          {isVisible ? (
+            <MdVisibilityOff onClick={() => setIsVisible(false)} />
+          ) : (
+            <MdVisibility onClick={() => setIsVisible(true)} />
+          )}
           <StyledHeadlineItalic>
             {errors.password?.message}
           </StyledHeadlineItalic>
@@ -134,10 +142,15 @@ const SignIn = () => {
         <label>
           <StyledHeadline>Digite novamente sua senha</StyledHeadline>
           <InputDefault
-            type="password"
+            type={isVisible ? "text" : "password"}
             placeholder="Digite novamente sua senha"
             {...register("confirmPassword")}
           />
+          {isVisible ? (
+            <MdVisibilityOff onClick={() => setIsVisible(false)} />
+          ) : (
+            <MdVisibility onClick={() => setIsVisible(true)} />
+          )}
           <StyledHeadlineItalic>
             {errors.confirmPassword?.message}
           </StyledHeadlineItalic>

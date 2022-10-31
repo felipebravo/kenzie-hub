@@ -40,9 +40,27 @@ export default createGlobalStyle`
   }
 
   label {
+    position: relative;
+
     display: inline-flex;
     flex-direction: column;
     gap: 4px;
+
+    svg {
+      position: absolute;
+      right: 10px;
+      top: 35px;
+
+      color: var(--grey-1);
+      font-size: 16px;
+
+      cursor: pointer;
+
+      &:hover{
+        color: var(--grey-0);
+        transition: 0.4s;
+      }
+    }
   }
 
   ::-webkit-scrollbar{

@@ -71,4 +71,8 @@ export const DivAddTechs = styled.div`
   align-items: center;
 
   width: 50%;
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;

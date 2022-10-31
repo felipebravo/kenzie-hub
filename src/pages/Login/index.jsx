@@ -12,9 +12,10 @@ import {
 } from "../../styles/typography";
 
 import Header from "../../components/Header";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { LinkStyled } from "../../components/Link/style";
 import { UserContext } from "../../contexts/UserContext";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 const schema = yup.object({
   email: yup.string().required("Insira seu e-mail de acesso"),
@@ -22,6 +23,7 @@ const schema = yup.object({
 });
 
 const Login = () => {
+  const [isVisible, setIsVisible] = useState(false);
   const { handleLogin } = useContext(UserContext);
 
   const {
@@ -51,10 +53,15 @@ const Login = () => {
         <label>
           <StyledHeadline>Senha</StyledHeadline>
           <InputDefault
-            type="password"
+            type={isVisible ? "text" : "password"}
             placeholder="Senha de acesso"
             {...register("password")}
           />
+          {isVisible ? (
+            <MdVisibilityOff onClick={() => setIsVisible(false)} />
+          ) : (
+            <MdVisibility onClick={() => setIsVisible(true)} />
+          )}
           <StyledHeadlineItalic>
             {errors.password?.message}
           </StyledHeadlineItalic>
