@@ -11,12 +11,12 @@ import {
   StyledTitle,
 } from "../../styles/typography";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "../../components/Header";
 import { LinkStyled } from "../../components/Link/style";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { useState } from "react";
 import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
+import { iNewUserResgister, UserContext } from "../../contexts/UserContext";
+import { HeaderStyled } from "../../components/Header/style";
 
 const schema = yup.object({
   name: yup.string().required("Nome é obrigatório"),
@@ -31,9 +31,9 @@ const schema = yup.object({
       /(^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,})/,
       "A senha deve conter no mínimo 8 caracteres. Necessário ter letras, números e ao menos um símbolo"
     ),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "As senhas devem ser iguais"),
+  // confirmPassword: yup
+  //   .string()
+  //   .oneOf([yup.ref("password"), null], "As senhas devem ser iguais"),
   bio: yup.string().max(150).required("Descrição é obrigatória"),
   contact: yup
     .string()
@@ -52,18 +52,18 @@ const SignIn = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iNewUserResgister>({
     resolver: yupResolver(schema),
   });
 
   return (
     <>
-      <Header variant="signin">
+      <HeaderStyled variant="signin">
         <img src={Logo} alt="KenzieHub" />
         <LinkStyled variant="signin" to={"/"}>
           Voltar
         </LinkStyled>
-      </Header>
+      </HeaderStyled>
       <Form onSubmit={handleSubmit(registerUser)}>
         <StyledTitle>Crie sua conta</StyledTitle>
         <StyledHeadline>Rápido e grátis, vamos nessa!</StyledHeadline>
@@ -101,7 +101,7 @@ const SignIn = () => {
             {errors.password?.message}
           </StyledHeadlineItalic>
         </label>
-        <label>
+        {/* <label>
           <StyledHeadline>Digite novamente sua senha</StyledHeadline>
           <InputDefault
             type={isVisible ? "text" : "password"}
@@ -116,7 +116,7 @@ const SignIn = () => {
           <StyledHeadlineItalic>
             {errors.confirmPassword?.message}
           </StyledHeadlineItalic>
-        </label>
+        </label> */}
         <label>
           <StyledHeadline>Fale sobre você</StyledHeadline>
           <InputDefault

@@ -16,7 +16,7 @@ import {
   StyledOverlay,
 } from "../style";
 import { useForm } from "react-hook-form";
-import { TechContext } from "../../../contexts/TechContext";
+import { iAddNewTech, TechContext } from "../../../contexts/TechContext";
 
 const schema = yup.object({
   title: yup
@@ -34,20 +34,20 @@ const schema = yup.object({
 const AddTechModal = () => {
   const { addTech, setAddModal } = useContext(TechContext);
 
-  const contentRef = useRef();
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iAddNewTech>({
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    const handleOutclick = (evt) => {
-      const target = evt.target;
-      !contentRef.current.contains(target) && setAddModal(null);
+    const handleOutclick = (evt: MouseEvent) => {
+      const target = evt.target as HTMLDivElement;
+      !contentRef.current?.contains(target) && setAddModal(null);
     };
 
     document.addEventListener("mousedown", handleOutclick);

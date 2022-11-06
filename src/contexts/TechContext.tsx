@@ -1,16 +1,51 @@
-import { createContext, useState } from "react";
+import { createContext, Dispatch, ReactNode, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../services/api";
 
-export const TechContext = createContext({});
+interface iTechProviderProps {
+  children: ReactNode;
+}
 
-const TechProvider = ({ children }) => {
-  const [techToUpdate, setTechToUpdate] = useState({});
-  const [addModal, setAddModal] = useState(null);
-  const [updateModal, setUpdateModal] = useState(null);
-  const [removeModal, setRemoveModal] = useState(null);
+export interface iAddNewTech {
+  title: string;
+  status: string;
+}
 
-  const errorNotify = (message) =>
+export interface iUpdateTech {
+  status: string;
+}
+
+export interface iTechList {
+  id: string;
+  title: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface iTechContext {
+  addTech(dataForm: iAddNewTech): Promise<void>;
+  updateTech(dataForm: iUpdateTech): Promise<void>;
+  removeTech(techId: string | null): Promise<void>;
+  techToUpdate: iUpdateTech | null;
+  setTechToUpdate: Dispatch<React.SetStateAction<iUpdateTech | null>>;
+  addModal: boolean | null;
+  setAddModal: Dispatch<React.SetStateAction<boolean | null>>;
+  updateModal: boolean | null;
+  setUpdateModal: Dispatch<React.SetStateAction<boolean | null>>;
+  removeModal: boolean | null;
+  setRemoveModal: Dispatch<React.SetStateAction<boolean | null>>;
+}
+
+export const TechContext = createContext<iTechContext>({} as iTechContext);
+
+const TechProvider = ({ children }: iTechProviderProps) => {
+  const [techToUpdate, setTechToUpdate] = useState<iUpdateTech | null>(null);
+  const [addModal, setAddModal] = useState<boolean | null>(null);
+  const [updateModal, setUpdateModal] = useState<boolean | null>(null);
+  const [removeModal, setRemoveModal] = useState<boolean | null>(null);
+
+  const errorNotify = (message: string) =>
     toast.error(message, {
       position: "top-right",
       autoClose: 1500,
@@ -22,7 +57,7 @@ const TechProvider = ({ children }) => {
       theme: "colored",
     });
 
-  const successNotify = (message) =>
+  const successNotify = (message: string) =>
     toast.success(message, {
       position: "top-right",
       autoClose: 1500,
@@ -34,12 +69,12 @@ const TechProvider = ({ children }) => {
       theme: "colored",
     });
 
-  const addTech = async (dataForm) => {
+  const addTech = async (dataForm: iAddNewTech) => {
     try {
       await api.post("users/techs", dataForm);
       successNotify("Tecnologia cadastrada com sucesso!");
       setAddModal(null);
-    } catch (error) {
+    } catch (error: any) {
       error.response.data.message ===
       "User Already have this technology created you can only update it"
         ? errorNotify(
@@ -49,7 +84,7 @@ const TechProvider = ({ children }) => {
     }
   };
 
-  const updateTech = async (dataForm) => {
+  const updateTech = async (dataForm: iUpdateTech) => {
     const techId = localStorage.getItem("@techId");
     try {
       await api.put(`users/techs/${techId}`, dataForm);
@@ -61,7 +96,7 @@ const TechProvider = ({ children }) => {
     }
   };
 
-  const removeTech = async (techId) => {
+  const removeTech = async (techId: string | null) => {
     try {
       await api.delete(`/users/techs/${techId}`);
       successNotify("Tecnologia removida com sucesso!");

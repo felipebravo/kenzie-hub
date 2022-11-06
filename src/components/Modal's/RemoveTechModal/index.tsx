@@ -11,12 +11,13 @@ import {
 
 const RemoveTechModal = () => {
   const { removeTech, setRemoveModal } = useContext(TechContext);
-  const contentRef = useRef();
+
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleOutclick = (evt) => {
-      const target = evt.target;
-      !contentRef.current.contains(target) && handleNoAnswer();
+    const handleOutclick = (evt: MouseEvent) => {
+      const target = evt.target as HTMLDivElement;
+      !contentRef.current?.contains(target) && handleNoAnswer();
     };
 
     document.addEventListener("mousedown", handleOutclick);

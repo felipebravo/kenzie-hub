@@ -9,7 +9,6 @@ import {
   Nav,
 } from "./style";
 import { StyledHeadline, StyledTitle } from "../../styles/typography";
-import Header from "../../components/Header/index";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { StyledLoading } from "../../components/Loading/style";
@@ -19,10 +18,11 @@ import Techs from "../../components/Techs";
 import AddTechModal from "../../components/Modal's/AddTechModal";
 import RemoveTechModal from "../../components/Modal's/RemoveTechModal";
 import UpdateTechModal from "../../components/Modal's/UpdateTechModal";
+import { HeaderStyled } from "../../components/Header/style";
 
 const Dashboard = () => {
   const { user, loading } = useContext(UserContext);
-  const { addModal, setAddModal, updateModal, removeModal, setRemoveModal } =
+  const { addModal, setAddModal, updateModal, removeModal } =
     useContext(TechContext);
   const navigate = useNavigate();
 
@@ -41,14 +41,14 @@ const Dashboard = () => {
       {user ? (
         <DivDashboard>
           <DivMenu>
-            <Header variant="dashboard">
+            <HeaderStyled variant="dashboard">
               <div>
                 <img src={Logo} alt="KenzieHub" />
                 <ButtonSmall type="button" onClick={() => handleLogout()}>
                   <MdOutlineLogout />
                 </ButtonSmall>
               </div>
-            </Header>
+            </HeaderStyled>
             <Nav>
               <div>
                 <StyledTitle>Olá, {user.name}</StyledTitle>
@@ -63,10 +63,10 @@ const Dashboard = () => {
                 <MdAddToQueue />
               </ButtonSmall>
             </DivAddTechs>
-            {addModal && <AddTechModal setAddModal={setAddModal} />}
-            {updateModal && <UpdateTechModal></UpdateTechModal>}
-            {removeModal && <RemoveTechModal setRemoveModal={setRemoveModal} />}
-            {user.techs.length === 0 ? (
+            {addModal && <AddTechModal />}
+            {updateModal && <UpdateTechModal />}
+            {removeModal && <RemoveTechModal />}
+            {user.techs?.length === 0 ? (
               <>
                 <StyledTitle>
                   Você ainda não possui nenhuma tecnologia :(

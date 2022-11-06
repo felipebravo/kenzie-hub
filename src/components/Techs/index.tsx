@@ -4,26 +4,30 @@ import { DivTech, StyledTech, StyledTechs } from "./style";
 import { IoTrashBinOutline } from "react-icons/io5";
 import { RiEditLine } from "react-icons/ri";
 import { useContext } from "react";
-import { TechContext } from "../../contexts/TechContext";
+import { iTechList, TechContext } from "../../contexts/TechContext";
 
-const Techs = ({ techs }) => {
+const Techs = ({ techs }: any) => {
   const { setRemoveModal, setUpdateModal, setTechToUpdate } =
     useContext(TechContext);
 
-  const modalRemove = (techId) => {
+  const modalRemove = (techId: string) => {
     setRemoveModal(true);
     localStorage.setItem("@techId", techId);
   };
 
-  const modalUpdate = (techId, techTitle, techStatus) => {
+  const modalUpdate = (
+    techId: string,
+    techTitle: string,
+    techStatus: string
+  ) => {
     setUpdateModal(true);
     localStorage.setItem("@techId", techId);
-    setTechToUpdate({ title: techTitle, status: techStatus });
+    setTechToUpdate({ status: techStatus });
   };
 
   return (
     <StyledTechs>
-      {techs.map((tech) => (
+      {techs.map((tech: iTechList) => (
         <StyledTech key={tech.id}>
           <StyledHeadlineBold>{tech.title}</StyledHeadlineBold>
           <DivTech>

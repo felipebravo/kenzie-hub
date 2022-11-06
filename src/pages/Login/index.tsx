@@ -10,12 +10,11 @@ import {
   StyledHeadlineItalic,
   StyledTitle,
 } from "../../styles/typography";
-
-import Header from "../../components/Header";
 import { useContext, useState } from "react";
 import { LinkStyled } from "../../components/Link/style";
-import { UserContext } from "../../contexts/UserContext";
+import { iHandleLogin, UserContext } from "../../contexts/UserContext";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { HeaderStyled } from "../../components/Header/style";
 
 const schema = yup.object({
   email: yup.string().required("Insira seu e-mail de acesso"),
@@ -30,15 +29,15 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iHandleLogin>({
     resolver: yupResolver(schema),
   });
 
   return (
     <>
-      <Header variant="login">
+      <HeaderStyled variant="login">
         <img src={Logo} alt="KenzieHub" />
-      </Header>
+      </HeaderStyled>
       <Form onSubmit={handleSubmit(handleLogin)}>
         <StyledTitle>Login</StyledTitle>
         <label>

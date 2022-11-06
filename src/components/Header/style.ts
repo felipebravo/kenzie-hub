@@ -1,5 +1,9 @@
 import styled, { css } from "styled-components";
 
+interface iHeaderTypeVariationsProps {
+  variant?: "dashboard" | "login" | "signin";
+}
+
 const HeaderTypeVariations = {
   login: css`
     text-align: center;
@@ -45,7 +49,7 @@ const HeaderTypeVariations = {
   `,
 };
 
-export const HeaderStyled = styled.header`
+export const HeaderStyled = styled.header<iHeaderTypeVariationsProps>`
   ${({ variant }) => HeaderTypeVariations[variant || "login"]}
 
   min-height: fit-content;

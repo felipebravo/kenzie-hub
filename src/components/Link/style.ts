@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
+interface iLinkTypeVariationsProps {
+  variant?: "login" | "signin";
+}
+
 const LinkTypeVariations = {
   login: css`
     display: inline-flex;
@@ -57,6 +61,6 @@ const LinkTypeVariations = {
   `,
 };
 
-export const LinkStyled = styled(Link)`
+export const LinkStyled = styled(Link)<iLinkTypeVariationsProps>`
   ${({ variant }) => LinkTypeVariations[variant || "login"]}
 `;
