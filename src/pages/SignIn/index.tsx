@@ -35,13 +35,11 @@ const schema = yup.object({
   //   .string()
   //   .oneOf([yup.ref("password"), null], "As senhas devem ser iguais"),
   bio: yup.string().max(150).required("Descrição é obrigatória"),
-  contact: yup
-    .string()
-    .required("Contato é obrigatório")
-    .matches(
-      /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/,
-      "Contato inválido"
-    ),
+  contact: yup.string().required("Contato é obrigatório"),
+  // .matches(
+  //   /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/,
+  //   "Contato inválido"
+  // ),
 });
 
 const SignIn = () => {
