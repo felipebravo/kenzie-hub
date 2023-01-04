@@ -24,7 +24,7 @@ const HeaderTypeVariations = {
 
     border-bottom: 1px solid var(--grey-2);
 
-    div {
+    div:first-child {
       display: flex;
       justify-content: space-between;
       gap: 10px;

@@ -22,5 +22,5 @@ export const StyledHeadlineItalic = styled.p`
   font-weight: 400;
   font-size: 12px;
   font-style: italic;
-  color: var(--grey-0);
+  color: var(--color-primary-focus);
 `;

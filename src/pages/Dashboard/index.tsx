@@ -1,4 +1,3 @@
-import Logo from "../../assets/Logo.svg";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ButtonSmall } from "../../styles/button";
 import {
@@ -19,13 +18,13 @@ import AddTechModal from "../../components/Modal's/AddTechModal";
 import RemoveTechModal from "../../components/Modal's/RemoveTechModal";
 import UpdateTechModal from "../../components/Modal's/UpdateTechModal";
 import { HeaderStyled } from "../../components/Header/style";
+import { Logo } from "../../components/Logo";
 
 const Dashboard = () => {
   const { user, loading } = useContext(UserContext);
   const { addModal, setAddModal, updateModal, removeModal } =
     useContext(TechContext);
   const navigate = useNavigate();
-
   const handleLogout = () => {
     window.localStorage.removeItem("@authToken");
 
@@ -43,7 +42,7 @@ const Dashboard = () => {
           <DivMenu>
             <HeaderStyled variant="dashboard">
               <div>
-                <img src={Logo} alt="KenzieHub" />
+                <Logo />
                 <ButtonSmall type="button" onClick={() => handleLogout()}>
                   <MdOutlineLogout />
                 </ButtonSmall>

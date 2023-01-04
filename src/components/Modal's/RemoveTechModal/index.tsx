@@ -40,9 +40,9 @@ const RemoveTechModal = () => {
         <StyledContent ref={contentRef}>
           <StyledTitle>Realmente deseja excluir esta tecnologia?</StyledTitle>
           <DivButtonsModal>
-            <ButtonDefault onClick={() => handleNoAnswer()}>No</ButtonDefault>
+            <ButtonDefault onClick={() => handleNoAnswer()}>Não</ButtonDefault>
             <ButtonDisable onClick={() => removeTech(techId)}>
-              Yes
+              Sim
             </ButtonDisable>
           </DivButtonsModal>
         </StyledContent>

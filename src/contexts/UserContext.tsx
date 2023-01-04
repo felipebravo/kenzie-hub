@@ -120,7 +120,7 @@ const UserProvider = ({ children }: iUserProviderProps) => {
       setLoading(false);
     };
     handleUser();
-  }, [user]);
+  }, []);
 
   const registerUser = async (data: iNewUserResgister): Promise<void> => {
     try {

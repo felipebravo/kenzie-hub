@@ -1,4 +1,3 @@
-import Logo from "../../assets/Logo.svg";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -15,9 +14,13 @@ import { LinkStyled } from "../../components/Link/style";
 import { iHandleLogin, UserContext } from "../../contexts/UserContext";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { HeaderStyled } from "../../components/Header/style";
+import { Logo } from "../../components/Logo";
 
 const schema = yup.object({
-  email: yup.string().required("Insira seu e-mail de acesso"),
+  email: yup
+    .string()
+    .email("Insira um e-mail válido")
+    .required("Insira seu e-mail de acesso"),
   password: yup.string().required("Insira sua senha de acesso"),
 });
 
@@ -36,7 +39,7 @@ const Login = () => {
   return (
     <>
       <HeaderStyled variant="login">
-        <img src={Logo} alt="KenzieHub" />
+        <Logo />
       </HeaderStyled>
       <Form onSubmit={handleSubmit(handleLogin)}>
         <StyledTitle>Login</StyledTitle>

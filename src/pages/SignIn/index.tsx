@@ -1,4 +1,3 @@
-import Logo from "../../assets/Logo.svg";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -17,6 +16,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { iNewUserResgister, UserContext } from "../../contexts/UserContext";
 import { HeaderStyled } from "../../components/Header/style";
+import { Logo } from "../../components/Logo";
 
 const schema = yup.object({
   name: yup.string().required("Nome é obrigatório"),
@@ -59,7 +59,7 @@ const SignIn = () => {
   return (
     <>
       <HeaderStyled variant="signin">
-        <img src={Logo} alt="KenzieHub" />
+        <Logo />
         <LinkStyled variant="signin" to={"/"}>
           Voltar
         </LinkStyled>
@@ -91,6 +91,9 @@ const SignIn = () => {
             type={isVisible ? "text" : "password"}
             placeholder="Digite aqui sua senha"
             {...register("password")}
+            onChange={(evt) => {
+              console.log(evt.target.value);
+            }}
           />
           {isVisible ? (
             <MdVisibilityOff onClick={() => setIsVisible(false)} />

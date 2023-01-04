@@ -14,7 +14,7 @@ export const Form = styled.form`
 
   background-color: var(--grey-3);
   border: 1px solid var(--grey-3);
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 8px 8px;
 
   label {
     width: 98%;
